@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator | Calculate Your Exact Age</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4e6fff;
+            --secondary: #8a5cff;
+            --accent: #ff5c8d;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #28a745;
+            --border-radius: 12px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef0f5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-right: 0.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .calculator {
+            grid-column: 1 / -1;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .result {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius);
+            margin-top: 1.5rem;
+        }
+
+        .age-large {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .age-details {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .age-unit {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--border-radius);
+            min-width: 100px;
+        }
+
+        .age-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .age-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .display-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .celebrity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .celebrity-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s;
+        }
+
+        .celebrity-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .celebrity-img {
+            height: 200px;
+            background-color: #ddd;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .celebrity-info {
+            padding: 1.2rem;
+        }
+
+        .celebrity-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .celebrity-age {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .celebrity-category {
+            display: inline-block;
+            background: #f0f4ff;
+            color: var(--primary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .ad-container {
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            margin: 2rem 0;
+            border: 1px dashed #ccc;
+        }
+
+        .ad-label {
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .ad-placeholder {
+            width: 100%;
+            height: 250px;
+            background: #e9ecef;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--gray);
+            border-radius: 4px;
+        }
+
+        .ad-placeholder.small {
+            height: 150px;
+        }
+
+        .ad-placeholder.horizontal {
+            height: 90px;
+        }
+
+        .premium-section {
+            background: linear-gradient(45deg, #ffd700, #ffb700);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .premium-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .pricing {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 0.5rem;
+            }
+            
+            .age-details {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .display-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calculator"></i>
+                    AgeCalculator
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Celebrities</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </nav>
+                <a href="#" class="btn">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            <div class="calculator card">
+                <h2 class="card-title"><i class="fas fa-birthday-cake"></i> Age Calculator</h2>
+                <div class="form-group">
+                    <label for="birthdate">Your Date of Birth</label>
+                    <input type="date" id="birthdate" value="1990-01-01">
+                </div>
+                <div class="form-group">
+                    <label for="as-of-date">Calculate Age As Of (Default: Today)</label>
+                    <input type="date" id="as-of-date">
+                </div>
+                <button class="btn" id="calculate-btn">Calculate Age</button>
+
+                <div class="result">
+                    <div class="age-large" id="age-result">33 years</div>
+                    <div class="age-details">
+                        <div class="age-unit">
+                            <div class="age-value" id="years">33</div>
+                            <div class="age-label">Years</div>
+                        </div>
+                        <div class="age-unit">
+                            <div class="age-value" id="months">5</div>
+                            <div class="age-label">Months</div>
+                        </div>
+                        <div class="age-unit">
+                            <div class="age-value" id="days">12</div>
+                            <div class="age-label">Days</div>
+                        </div>
+                    </div>
+                    <div class="age-details">
+                        <div class="age-unit">
+                            <div class="age-value" id="total-days">12,205</div>
+                            <div class="age-label">Total Days</div>
+                        </div>
+                        <div class="age-unit">
+                            <div class="age-value" id="total-hours">292,920</div>
+                            <div class="age-label">Total Hours</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="display-options">
+                    <button class="btn option-btn">Years/Months/Days</button>
+                    <button class="btn option-btn">Total Days</button>
+                    <button class="btn option-btn">Total Hours</button>
+                    <button class="btn option-btn">Minutes/Seconds</button>
+                </div>
+            </div>
+
+            <div class="ad-container">
+                <span class="ad-label">Advertisement</span>
+                <div class="ad-placeholder">
+                    <i class="fab fa-google" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                    <div>Google AdSense</div>
+                    <div style="font-size: 0.8rem; margin-top: 0.5rem;">300x250 Ad</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-star"></i> Famous People Birthdays</h2>
+                <div class="celebrity-grid">
+                    <div class="celebrity-card">
+                        <div class="celebrity-img" style="background-color: #a0d2eb;"></div>
+                        <div class="celebrity-info">
+                            <h3 class="celebrity-name">Tom Hanks</h3>
+                            <div class="celebrity-age">67 years</div>
+                            <span class="celebrity-category">Actor</span>
+                            <p>Born: July 9, 1956</p>
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                        </div>
+                    </div>
+                    <div class="celebrity-card">
+                        <div class="celebrity-img" style="background-color: #e5eaf5;"></div>
+                        <div class="celebrity-info">
+                            <h3 class="celebrity-name">Taylor Swift</h3>
+                            <div class="celebrity-age">33 years</div>
+                            <span class="celebrity-category">Singer</span>
+                            <p>Born: December 13, 1989</p>
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                        </div>
+                    </div>
+                    <div class="celebrity-card">
+                        <div class="celebrity-img" style="background-color: #d0bdf4;"></div>
+                        <div class="celebrity-info">
+                            <h3 class="celebrity-name">LeBron James</h3>
+                            <div class="celebrity-age">38 years</div>
+                            <span class="celebrity-category">Athlete</span>
+                            <p>Born: December 30, 1984</p>
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                        </div>
+                    </div>
+                    <div class="celebrity-card">
+                        <div class="celebrity-img" style="background-color: #ffd8d8;"></div>
+                        <div class="celebrity-info">
+                            <h3 class="celebrity-name">Emma Watson</h3>
+                            <div class="celebrity-age">33 years</div>
+                            <span class="celebrity-category">Actress</span>
+                            <p>Born: April 15, 1990</p>
+                            <a href="#" class="btn btn-outline">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-container">
+                <span class="ad-label">Advertisement</span>
+                <div class="ad-placeholder horizontal">
+                    <i class="fab fa-google" style="font-size: 1.5rem; margin-bottom: 0.3rem;"></i>
+                    <div>Google AdSense</div>
+                    <div style="font-size: 0.7rem; margin-top: 0.3rem;">728x90 Ad</div>
+                </div>
+            </div>
+
+            <div class="premium-section">
+                <h2 class="premium-title">Upgrade to Premium</h2>
+                <p>Enjoy an ad-free experience and unlock powerful comparison features</p>
+                
+                <div class="premium-features">
+                    <div class="feature">
+                        <i class="fas fa-ban"></i>
+                        <h3>No Ads</h3>
+                        <p>Enjoy a clean, uninterrupted experience with no advertisements</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-compare"></i>
+                        <h3>Age Comparisons</h3>
+                        <p>Compare your age with historical events and famous people</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Detailed Analytics</h3>
+                        <p>Get in-depth analysis of your age milestones and statistics</p>
+                    </div>
+                </div>
+
+                <div class="pricing">
+                    <p>One-time payment</p>
+                    <div class="price">$9</div>
+                    <button class="btn" style="background: #333;">Upgrade Now</button>
+                </div>
+            </div>
+
+            <div class="ad-container">
+                <span class="ad-label">Advertisement</span>
+                <div class="ad-placeholder small">
+                    <i class="fab fa-google" style="font-size: 1.2rem; margin-bottom: 0.3rem;"></i>
+                    <div>Google AdSense</div>
+                    <div style="font-size: 0.6rem; margin-top: 0.3rem;">300x100 Ad</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 AgeCalculator. All rights reserved.</p>
+            <p>This site uses Google AdSense for advertising and Stripe for payment processing.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Age calculation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const birthdateInput = document.getElementById('birthdate');
+            const asOfDateInput = document.getElementById('as-of-date');
+            const calculateBtn = document.getElementById('calculate-btn');
+            
+            // Set as-of-date to today
+            const today = new Date();
+            asOfDateInput.value = formatDate(today);
+            
+            // Calculate age on button click
+            calculateBtn.addEventListener('click', calculateAge);
+            
+            // Calculate age on page load
+            calculateAge();
+            
+            // Update age every second for real-time effect
+            setInterval(calculateAge, 1000);
+            
+            function calculateAge() {
+                const birthdate = new Date(birthdateInput.value);
+                let asOfDate = new Date(asOfDateInput.value);
+                
+                // If no as-of-date specified, use current time for real-time updating
+                if (!asOfDateInput.value) {
+                    asOfDate = new Date();
+                }
+                
+                if (isNaN(birthdate.getTime())) {
+                    alert('Please enter a valid birthdate');
+                    return;
+                }
+                
+                const ageDetails = calculateAgeDetails(birthdate, asOfDate);
+                
+                // Update the UI with calculated values
+                document.getElementById('age-result').textContent = `${ageDetails.years} years`;
+                document.getElementById('years').textContent = ageDetails.years;
+                document.getElementById('months').textContent = ageDetails.months;
+                document.getElementById('days').textContent = ageDetails.days;
+                document.getElementById('total-days').textContent = ageDetails.totalDays.toLocaleString();
+                document.getElementById('total-hours').textContent = (ageDetails.totalDays * 24).toLocaleString();
+            }
+            
+            function calculateAgeDetails(birthdate, asOfDate) {
+                let years = asOfDate.getFullYear() - birthdate.getFullYear();
+                let months = asOfDate.getMonth() - birthdate.getMonth();
+                let days = asOfDate.getDate() - birthdate.getDate();
+                
+                if (days < 0) {
+                    months--;
+                    // Days in previous month
+                    const prevMonth = new Date(asOfDate.getFullYear(), asOfDate.getMonth(), 0);
+                    days += prevMonth.getDate();
+                }
+                
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                
+                // Calculate total days
+                const diffTime = Math.abs(asOfDate - birthdate);
+                const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                
+                return {
+                    years,
+                    months,
+                    days,
+                    totalDays
+                };
+            }
+            
+            function formatDate(date) {
+                const year = date.getFullYear();
+                let month = (date.getMonth() + 1).toString().padStart(2, '0');
+                let day = date.getDate().toString().padStart(2, '0');
+                
+                return `${year}-${month}-${day}`;
+            }
+        });
+    </script>
+</body>
+</html>
