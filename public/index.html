@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Age Calculator</title>
+	<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+	<header class="container">
+		<h1>Age Calculator</h1>
+		<nav>
+			<a href="/index.html">Home</a>
+			<a href="/celebrities.html">Famous Birthdays</a>
+			<a href="/pricing.html">Pricing</a>
+		</nav>
+	</header>
+
+	<main class="container grid">
+		<section class="card span-2">
+			<h2>Calculate Your Age</h2>
+			<form id="age-form" class="form">
+				<label>Date of Birth
+					<input type="date" id="dob" required>
+				</label>
+				<label>Calculate up to (optional)
+					<input type="datetime-local" id="asof">
+				</label>
+				<button type="submit">Show Age</button>
+			</form>
+
+			<div id="live-age" class="live-age hidden">
+				<h3>Your Age (live)</h3>
+				<div class="age-row" id="age-traditional"></div>
+				<div class="age-row" id="age-total-days"></div>
+				<div class="age-row" id="age-total-hours"></div>
+				<div class="age-row" id="age-total-mins"></div>
+			</div>
+		</section>
+
+		<aside class="card">
+			<h3>Sponsored</h3>
+			<!-- Google AdSense Placeholder: 300x250 -->
+			<div class="adsense-box ads-300x250">
+				<div class="adsense-label">Ad</div>
+				<div class="adsense-title">Your Ad Title Here</div>
+				<div class="adsense-text">Ad description line one. Ad description line two.</div>
+				<div class="adsense-url">www.example.com</div>
+			</div>
+		</aside>
+
+		<section class="card span-2">
+			<h2>What we show</h2>
+			<ul>
+				<li>Exact age: years, months, days, hours, minutes (updates every second)</li>
+				<li>Total days lived</li>
+				<li>Total hours and minutes lived</li>
+			</ul>
+
+			<!-- Inline Ad placeholder 728x90 -->
+			<div class="adsense-box ads-728x90">
+				<div class="adsense-label">Ad</div>
+				<div class="adsense-title">Sponsored Link</div>
+				<div class="adsense-text">Relevant offer aligned with your interests.</div>
+				<div class="adsense-url">www.sponsor.com</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="container">
+		<p>© <span id="year"></span> Age Calculator</p>
+	</footer>
+
+	<script src="/js/common.js"></script>
+	<script src="/js/age.js"></script>
+</body>
+</html>
