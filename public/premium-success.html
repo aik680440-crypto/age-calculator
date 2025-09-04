@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Premium Activated</title>
+	<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+	<header class="container">
+		<h1>Premium Activated</h1>
+		<nav>
+			<a href="/index.html">Home</a>
+			<a href="/celebrities.html">Famous Birthdays</a>
+			<a href="/pricing.html">Pricing</a>
+		</nav>
+	</header>
+
+	<main class="container">
+		<section class="card">
+			<h2>Thank you!</h2>
+			<p>Your premium access is now active on this device. Ads are disabled and Age Comparisons are unlocked.</p>
+			<p><a href="/index.html">Go to the calculator</a></p>
+		</section>
+	</main>
+
+	<footer class="container">
+		<p>© <span id="year"></span> Age Calculator</p>
+	</footer>
+
+	<script>
+	(function(){
+		localStorage.setItem('premium', 'true');
+		document.getElementById('year').textContent = new Date().getFullYear();
+	})();
+	</script>
+</body>
+</html>
